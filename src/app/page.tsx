@@ -1,7 +1,7 @@
 'use client';
 
 import {useChat} from "@ai-sdk/react";
-import {useState} from 'react'
+import {useEffect, useState} from 'react'
 import {FileIcon} from "@/src/components/icons";
 import {AnimatePresence, motion} from "framer-motion";
 import {useScrollToBottom} from "@/src/components/use-scroll-to-bottom";
@@ -31,6 +31,24 @@ export default function Home() {
 
     const [messagesContainerRef, messagesEndRef] =
         useScrollToBottom<HTMLDivElement>();
+
+    useEffect(() => {
+        (async () => {
+            await fetch('/api/chroma/upsert', {
+                method: 'POST',
+            })
+        })()
+    }, [])
+
+    const handleQuery = async () => {
+        const res = await fetch('/api/chroma/query', {
+            method: 'POST',
+            body: JSON.stringify({query: 'What is the longest English word?'}),
+            headers: {'Content-Type': 'application/json'},
+        });
+        const json = await res.json();
+        console.log(json);
+    };
 
     return (
         <div className="flex flex-row justify-center pb-20 h-dvh bg-white dark:bg-zinc-900">
@@ -93,7 +111,11 @@ export default function Home() {
                             setInput(event.target.value);
                         }}
                     />
-
+                    <button
+                        className="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-100 hover:text-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300"
+                        onClick={handleQuery}>
+                        Try me
+                    </button>
                     <div
                         className="relative text-sm bg-zinc-100 rounded-lg size-9 flex-shrink-0 flex flex-row items-center justify-center cursor-pointer hover:bg-zinc-200 dark:text-zinc-50 dark:bg-zinc-700 dark:hover:bg-zinc-800"
                         onClick={() => {
@@ -101,6 +123,7 @@ export default function Home() {
                         }}
                     >
                         <FileIcon/>
+
                         <motion.div
                             className="absolute text-xs -top-2 -right-2 bg-blue-500 size-5 rounded-full flex flex-row justify-center items-center border-2 dark:border-zinc-900 border-white text-blue-50"
                             initial={{opacity: 0, scale: 0.5}}
