@@ -14,7 +14,19 @@ export async function getCollection() {
     } catch {
         return await client.createCollection({
             name: 'my_collection',
-            embeddingFunction: embedder,
+            // embeddingFunction: embedder,
         });
     }
+}
+
+
+export async function queryChromaRelevantDocs(query: string) {
+    const collection = await getCollection();
+    const result = await collection.query({
+        queryTexts: [query],
+        nResults: 3,
+        include: ['documents'],
+    });
+
+    return result.documents?.[0]?.join('\n\n') ?? '';
 }

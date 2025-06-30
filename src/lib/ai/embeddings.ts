@@ -1,22 +1,29 @@
 import {embedMany} from 'ai';
 import {openai} from '@ai-sdk/openai';
+import {RecursiveCharacterTextSplitter} from "@langchain/textsplitters";
 
-const embeddingModel = openai.embedding('text-embedding-ada-002');
-
-export const generateChunks = (input: string): string[] => {
-    return input
-        .trim()
-        .split('.')
-        .filter(i => i !== '');
-};
+export const generateChunks = async (
+    content: string,
+): Promise<Record<string, any>[]> => {
+    const textSplitter = new RecursiveCharacterTextSplitter({
+        chunkSize: 1000,
+    });
+    return await textSplitter.createDocuments([content]);
+}
 
 export const generateEmbeddings = async (
-    value: string,
+    chunkedContent: Array<Record<string, any>[]>,
 ): Promise<Array<{ embedding: number[]; content: string }>> => {
-    const chunks = generateChunks(value);
+
+    console.log(chunkedContent)
+
     const {embeddings} = await embedMany({
-        model: embeddingModel,
-        values: chunks,
+        model: openai.embedding("text-embedding-3-small"),
+        values: chunkedContent.map((chunk) => chunk.pageContent),
     });
-    return embeddings.map((e, i) => ({content: chunks[i], embedding: e}));
+
+    return embeddings.map((embedding, index) => ({
+        embedding,
+        content: chunkedContent[index]?.pageContent,
+    }));
 };

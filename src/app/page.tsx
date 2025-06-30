@@ -11,8 +11,8 @@ import {Files} from "@/src/components/files";
 const suggestedActions = [
     {
         title: "What's the summary",
-        label: "of these documents?",
-        action: "what's the summary of these documents?",
+        label: "of this document?",
+        action: "what's the summary of this document?",
     },
     {
         title: "Who is the author",
@@ -39,16 +39,6 @@ export default function Home() {
             })
         })()
     }, [])
-
-    const handleQuery = async () => {
-        const res = await fetch('/api/chroma/query', {
-            method: 'POST',
-            body: JSON.stringify({query: 'What is the longest English word?'}),
-            headers: {'Content-Type': 'application/json'},
-        });
-        const json = await res.json();
-        console.log(json);
-    };
 
     return (
         <div className="flex flex-row justify-center pb-20 h-dvh bg-white dark:bg-zinc-900">
@@ -111,11 +101,6 @@ export default function Home() {
                             setInput(event.target.value);
                         }}
                     />
-                    <button
-                        className="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-100 hover:text-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300"
-                        onClick={handleQuery}>
-                        Try me
-                    </button>
                     <div
                         className="relative text-sm bg-zinc-100 rounded-lg size-9 flex-shrink-0 flex flex-row items-center justify-center cursor-pointer hover:bg-zinc-200 dark:text-zinc-50 dark:bg-zinc-700 dark:hover:bg-zinc-800"
                         onClick={() => {
