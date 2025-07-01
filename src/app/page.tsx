@@ -1,12 +1,11 @@
 'use client';
 
 import {useChat} from "@ai-sdk/react";
-import {useEffect, useState} from 'react'
 import {FileIcon} from "@/src/components/icons";
-import {AnimatePresence, motion} from "framer-motion";
+import {motion} from "framer-motion";
 import {useScrollToBottom} from "@/src/components/use-scroll-to-bottom";
 import {Message as PreviewMessage} from "@/src/components/message";
-import {Files} from "@/src/components/files";
+import {_useOnMount} from "@/src/hooks/_useOnMount";
 
 const suggestedActions = [
     {
@@ -24,21 +23,10 @@ const suggestedActions = [
 
 export default function Home() {
     const {messages, input, setInput, handleSubmit, append} = useChat({})
-    const [selectedFilePathnames, setSelectedFilePathnames] = useState<
-        Array<string>
-    >([]);
-    const [isFilesVisible, setIsFilesVisible] = useState(false);
+    _useOnMount()
 
     const [messagesContainerRef, messagesEndRef] =
         useScrollToBottom<HTMLDivElement>();
-
-    useEffect(() => {
-        (async () => {
-            await fetch('/api/chroma/upsert', {
-                method: 'POST',
-            })
-        })()
-    }, [])
 
     return (
         <div className="flex flex-row justify-center pb-20 h-dvh bg-white dark:bg-zinc-900">
@@ -96,6 +84,7 @@ export default function Home() {
                     <input
                         className="bg-zinc-100 rounded-md px-2 py-1.5 flex-1 outline-none dark:bg-zinc-700 text-zinc-800 dark:text-zinc-300"
                         placeholder="Send a message..."
+                        autoFocus
                         value={input}
                         onChange={(event) => {
                             setInput(event.target.value);
@@ -103,33 +92,11 @@ export default function Home() {
                     />
                     <div
                         className="relative text-sm bg-zinc-100 rounded-lg size-9 flex-shrink-0 flex flex-row items-center justify-center cursor-pointer hover:bg-zinc-200 dark:text-zinc-50 dark:bg-zinc-700 dark:hover:bg-zinc-800"
-                        onClick={() => {
-                            setIsFilesVisible(!isFilesVisible);
-                        }}
                     >
                         <FileIcon/>
-
-                        <motion.div
-                            className="absolute text-xs -top-2 -right-2 bg-blue-500 size-5 rounded-full flex flex-row justify-center items-center border-2 dark:border-zinc-900 border-white text-blue-50"
-                            initial={{opacity: 0, scale: 0.5}}
-                            animate={{opacity: 1, scale: 1}}
-                            transition={{delay: 0.5}}
-                        >
-                            {selectedFilePathnames?.length}
-                        </motion.div>
                     </div>
                 </form>
             </div>
-
-            <AnimatePresence>
-                {isFilesVisible && (
-                    <Files
-                        setIsFilesVisible={setIsFilesVisible}
-                        selectedFilePathnames={selectedFilePathnames}
-                        setSelectedFilePathnames={setSelectedFilePathnames}
-                    />
-                )}
-            </AnimatePresence>
         </div>
     )
 }

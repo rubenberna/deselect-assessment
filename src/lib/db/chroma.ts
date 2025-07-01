@@ -1,30 +1,24 @@
 import {ChromaClient} from 'chromadb';
-import {OpenAIEmbeddingFunction} from '@chroma-core/openai';
+import {embedder} from "@/src/lib/ai/embeddings";
 
 const client = new ChromaClient({path: 'http://localhost:8000'});
 
-const embedder = new OpenAIEmbeddingFunction({
-    apiKey: process.env.OPENAI_API_KEY!,
-    modelName: "text-embedding-3-small",
-});
-
-export async function getCollection() {
+export async function getPDFCollection() {
     try {
-        return await client.getCollection({name: 'my_collection'});
+        return await client.getCollection({name: 'pdf_data'});
     } catch {
         return await client.createCollection({
-            name: 'my_collection',
-            // embeddingFunction: embedder,
+            name: 'pdf_data',
+            embeddingFunction: embedder,
         });
     }
 }
 
-
-export async function queryChromaRelevantDocs(query: string) {
-    const collection = await getCollection();
+export async function queryPDF(query: string) {
+    const collection = await getPDFCollection();
     const result = await collection.query({
         queryTexts: [query],
-        nResults: 3,
+        nResults: 1,
         include: ['documents'],
     });
 

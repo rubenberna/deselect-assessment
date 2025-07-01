@@ -1,6 +1,6 @@
 import {openai} from '@ai-sdk/openai';
 import {streamText} from 'ai';
-import {queryChromaRelevantDocs} from "@/src/lib/db/chroma";
+import {queryPDF} from "@/src/lib/db/chroma";
 
 export const maxDuration = 30;
 
@@ -12,7 +12,7 @@ export async function POST(req: Request) {
         .at(-1)?.content;
 
     // 1. Get ChromaDB context
-    const contextText = await queryChromaRelevantDocs(lastUserMessage || '');
+    const contextText = await queryPDF(lastUserMessage || '');
     console.log(`Context from ChromaDB: ${contextText}`);
 
 
