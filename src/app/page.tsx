@@ -24,7 +24,7 @@ const suggestedActions = [
 export default function Home() {
     const {messages, input, setInput, handleSubmit, append} = useChat({})
     _useOnMount()
-
+    
     const [messagesContainerRef, messagesEndRef] =
         useScrollToBottom<HTMLDivElement>();
 

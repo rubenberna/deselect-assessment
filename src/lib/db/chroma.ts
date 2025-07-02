@@ -4,14 +4,10 @@ import {embedder} from "@/src/lib/ai/embeddings";
 const client = new ChromaClient({path: 'http://localhost:8000'});
 
 export async function getPDFCollection() {
-    try {
-        return await client.getCollection({name: 'pdf_data'});
-    } catch {
-        return await client.createCollection({
-            name: 'pdf_data',
-            embeddingFunction: embedder,
-        });
-    }
+    return await client.getOrCreateCollection({
+        name: 'pdf_data',
+        embeddingFunction: embedder,
+    })
 }
 
 export async function queryPDF(query: string) {

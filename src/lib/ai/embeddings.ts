@@ -1,6 +1,6 @@
 import {RecursiveCharacterTextSplitter} from "@langchain/textsplitters";
 import {OpenAIEmbeddingFunction} from "@chroma-core/openai";
-import {Document} from "@langchain/document";
+import {Document} from "@langchain/core/documents";
 
 export const embedder = new OpenAIEmbeddingFunction({
     apiKey: process.env.OPENAI_API_KEY!,
@@ -8,8 +8,8 @@ export const embedder = new OpenAIEmbeddingFunction({
 });
 
 export const generateChunks = async (
-    docs: Document<Record<string, any>>[],
-): Promise<Document<Record<string, any>>[]> => {
+    docs: Document[],
+): Promise<Document[]> => {
     const textSplitter = new RecursiveCharacterTextSplitter({
         chunkSize: 1000,
         chunkOverlap: 200,
