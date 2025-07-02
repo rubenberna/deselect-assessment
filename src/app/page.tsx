@@ -1,7 +1,7 @@
 'use client';
 
 import {useChat} from "@ai-sdk/react";
-import {FileIcon} from "@/src/components/icons";
+import {SendIcon} from "@/src/components/icons";
 import {motion} from "framer-motion";
 import {useScrollToBottom} from "@/src/components/use-scroll-to-bottom";
 import {Message as PreviewMessage} from "@/src/components/message";
@@ -14,9 +14,9 @@ const suggestedActions = [
         action: "what's the summary of this document?",
     },
     {
-        title: "Who are the authors",
-        label: "of this document?",
-        action: "who is the author of these documents?",
+        title: "What are the top 3",
+        label: "suggested measures?",
+        action: "what are the top 3 suggested measures in this document?",
     },
 ];
 
@@ -93,7 +93,7 @@ export default function Home() {
                     <div
                         className="relative text-sm bg-zinc-100 rounded-lg size-9 flex-shrink-0 flex flex-row items-center justify-center cursor-pointer hover:bg-zinc-200 dark:text-zinc-50 dark:bg-zinc-700 dark:hover:bg-zinc-800"
                     >
-                        <FileIcon/>
+                        <SendIcon/>
                     </div>
                 </form>
             </div>

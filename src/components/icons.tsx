@@ -94,6 +94,27 @@ export const RouteIcon = ({size = 16}: { size?: number }) => {
     );
 };
 
+export const SendIcon = ({size = 16}: { size?: number }) => {
+    return (
+        <svg
+            height={size}
+            strokeLinejoin="round"
+            viewBox="0 0 16 16"
+            width={size}
+            style={{color: "currentcolor"}}
+        >
+            <path
+                fillRule="evenodd"
+                clipRule="evenodd"
+                // Original: d="M15.5 0.5L0.5 8L15.5 15.5L14.5 9.5L2.5 8L14.5 6.5L15.5 0.5Z"
+                // Flipped:   M0.5 0.5L15.5 8L0.5 15.5L1.5 9.5L13.5 8L1.5 6.5L0.5 0.5Z"
+                d="M0.5 0.5L15.5 8L0.5 15.5L1.5 9.5L13.5 8L1.5 6.5L0.5 0.5Z"
+                fill="currentColor"
+            ></path>
+        </svg>
+    );
+}
+
 export const FileIcon = ({size = 16}: { size?: number }) => {
     return (
         <svg
