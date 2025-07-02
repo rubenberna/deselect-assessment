@@ -14,8 +14,8 @@ const suggestedActions = [
         action: "what's the summary of this document?",
     },
     {
-        title: "Who is the author",
-        label: "of these documents?",
+        title: "Who are the authors",
+        label: "of this document?",
         action: "who is the author of these documents?",
     },
 ];
@@ -24,7 +24,7 @@ const suggestedActions = [
 export default function Home() {
     const {messages, input, setInput, handleSubmit, append} = useChat({})
     _useOnMount()
-    
+
     const [messagesContainerRef, messagesEndRef] =
         useScrollToBottom<HTMLDivElement>();
 

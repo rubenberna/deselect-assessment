@@ -1,9 +1,16 @@
+import path from "path";
 import {generateChunks} from "@/src/lib/ai/embeddings";
 import {processFullPdfDocument} from "@/src/lib/ai/pdfLoader";
 import {getPDFCollection} from "@/src/lib/db/chroma";
-import path from "path";
 
-// import {generateContentFromPdf} from "@/src/lib/ai/fileLoader";
+
+const jobStatuses: Record<string, {
+    status: string;
+    progress: number;
+    totalPages: number;
+    result?: any;
+    error?: string
+}> = {};
 
 export async function POST() {
     const collection = await getPDFCollection();
