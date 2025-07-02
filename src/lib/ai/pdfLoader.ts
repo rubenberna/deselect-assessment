@@ -8,7 +8,7 @@ import pLimit from 'p-limit';
 
 export const generateContentFromPdfPage = async (
     pdfPageBuffer: Buffer,
-    pageNumber: number // Optional: for logging/metadata
+    pageNumber: number
 ): Promise<string> => {
     console.log(`Generating content for page ${pageNumber} with GPT-4o...`);
 
@@ -22,7 +22,7 @@ export const generateContentFromPdfPage = async (
 
     try {
         const {text} = await generateText({
-            model: openai('gpt-4o'), // Or google('gemini-1.5-flash')
+            model: openai('gpt-4o'),
             system: systemPrompt,
             messages: [
                 {
@@ -30,14 +30,12 @@ export const generateContentFromPdfPage = async (
                     content: [
                         {
                             type: 'file',
-                            data: pdfPageBuffer, // Directly pass the Buffer of the single-page PDF
+                            data: pdfPageBuffer,
                             mimeType: "application/pdf",
                         }
                     ]
                 }
             ],
-            // Optional: Adjust maxTokens if you expect very dense pages
-            // maxTokens: 4000,
         });
         console.log(`Content extracted from page ${pageNumber}. Length: ${text.length}`);
         return text;
@@ -67,7 +65,6 @@ export const processFullPdfDocument = async (filePath: string): Promise<Document
         const singlePagePdfBytes = await newPdfDoc.save();
         const singlePagePdfBuffer = Buffer.from(singlePagePdfBytes);
 
-        // Wrap your async task (generateContentFromPdfPage call) with `limit()`
         pageProcessingTasks.push(limit(async () => {
             const pageText = await generateContentFromPdfPage(singlePagePdfBuffer, i + 1);
             return new Document({
