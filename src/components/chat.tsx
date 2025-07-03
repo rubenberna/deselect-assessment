@@ -8,7 +8,7 @@ import {fetcher} from "@/src/lib/utils/functions";
 import {LoadingPdf} from "@/src/components/loadingPdf";
 import {SuggestedMessages} from "@/src/components/suggestedMessages";
 import {NewMessageForm} from "@/src/components/newMessageForm";
-import {DisplayMessages} from "@/src/components/displayMessages";
+import {MessagesBoard} from "@/src/components/messagesBoard";
 
 export default function Chat() {
   const {messages, input, setInput, handleSubmit, append} = useChat({})
@@ -24,7 +24,7 @@ export default function Chat() {
   return (
     <div className="flex flex-row justify-center pb-20 h-dvh bg-white dark:bg-zinc-900">
       <div className="flex flex-col justify-between items-center gap-4">
-        <DisplayMessages
+        <MessagesBoard
           messagesContainerRef={messagesContainerRef}
           messagesEndRef={messagesEndRef}
           messages={messages}

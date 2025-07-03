@@ -8,9 +8,9 @@ const suggestedActions = [
     action: "what's the summary of this document?",
   },
   {
-    title: "What are the",
-    label: "important takeaways?",
-    action: "what are the important takeaways?",
+    title: "What are the important",
+    label: "takeaways of this analysis?",
+    action: "what are the important takeaways of this analysis?",
   },
 ];
 

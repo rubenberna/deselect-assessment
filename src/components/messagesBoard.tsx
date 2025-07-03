@@ -1,4 +1,4 @@
-import {RefObject} from "react";
+import {memo, RefObject} from "react";
 import {Message} from "ai";
 import {Message as PreviewMessage} from "@/src/components/message";
 
@@ -8,7 +8,7 @@ interface IProps {
   messages: Message[]
 }
 
-export const DisplayMessages = (props: IProps) => {
+export const MessagesBoard = memo((props: IProps) => {
   const {messagesContainerRef, messagesEndRef, messages} = props;
 
   return (
@@ -29,4 +29,4 @@ export const DisplayMessages = (props: IProps) => {
       />
     </div>
   )
-}
+})
