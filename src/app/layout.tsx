@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "DESelect PDF chat",
-  description: "Chat with PDF ai over The State Of Marketing Operations 2025 report",
+  description: "Chat with OpenAI over 'The State Of Marketing Operations 2025' report",
 };
 
 export default function RootLayout({
