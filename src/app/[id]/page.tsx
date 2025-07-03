@@ -1,12 +1,16 @@
+import {getChatById} from "@/src/lib/db/supabase";
+import Chat from "@/src/components/chat";
+
 export default async function Page({params}: { params: any }) {
   const {id} = await params;
+  const chatFromDb = await getChatById({id});
 
+  if (!chatFromDb) {
+    return <div className="flex h-screen w-screen items-center justify-center">Chat not found</div>;
+  }
 
   return (
-    <div className="flex h-screen w-screen items-center justify-center">
-      <div className="w-full max-w-3xl">
-        History of chat with ID: {id}
-      </div>
-    </div>
+    <Chat
+      initialMessages={chatFromDb?.messages}/>
   );
 }

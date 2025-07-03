@@ -22,9 +22,7 @@ export const History = () => {
   } = useSWR<Array<IChat>>("/api/history", fetcher, {
     fallbackData: [],
   });
-
-  console.log(history)
-
+  
   useEffect(() => {
     mutate();
   }, [pathname, mutate]);

@@ -5,6 +5,6 @@ import Chat from "@/src/components/chat";
 export default function Page() {
 
   return (
-    <Chat id={null} initialMessages={[]}/>
+    <Chat initialMessages={[]}/>
   )
 }

@@ -46,3 +46,20 @@ export const getChatsByUser = async ({userId}: { userId: string }) => {
 
   return data;
 }
+
+export const getChatById = async ({id}: { id: string }) => {
+  const client = createClient();
+
+  const {data, error} = await client
+    .from('chat')
+    .select('*')
+    .eq('id', id)
+    .single();
+
+  if (error) {
+    console.error("Error fetching chat by ID:", error);
+    throw error;
+  }
+
+  return data;
+}
