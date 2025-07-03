@@ -5,7 +5,8 @@ import {SendIcon} from "@/src/components/icons";
 import {motion} from "framer-motion";
 import {useScrollToBottom} from "@/src/components/use-scroll-to-bottom";
 import {Message as PreviewMessage} from "@/src/components/message";
-import {_useOnMount} from "@/src/hooks/_useOnMount";
+import useSWR from "swr";
+import {fetcher} from "@/src/lib/utils/functions";
 
 const suggestedActions = [
   {
@@ -23,7 +24,9 @@ const suggestedActions = [
 
 export default function Home() {
   const {messages, input, setInput, handleSubmit, append} = useChat({})
-  _useOnMount()
+  const {data, error, isLoading} = useSWR('/api/loadPdf', fetcher)
+
+  console.log(data, error, isLoading)
 
   const [messagesContainerRef, messagesEndRef] =
     useScrollToBottom<HTMLDivElement>();

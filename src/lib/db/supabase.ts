@@ -30,7 +30,7 @@ export const createMessage = async ({messages, id, author}: {
   }
 }
 
-export const getChatsByUser = async (userId: string) => {
+export const getChatsByUser = async ({userId}: { userId: string }) => {
   const client = createClient();
 
   const {data, error} = await client

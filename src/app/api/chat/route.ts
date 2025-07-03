@@ -9,7 +9,6 @@ export async function POST(req: Request) {
   const {id, messages} = await req.json();
 
   const lastUserMessage = messages
-    .filter((m: { role: string; content: string }) => m.role === 'user')
     .at(-1)?.content;
 
   const contextText = await queryPDF(lastUserMessage || '');
