@@ -80,13 +80,6 @@ export const History = () => {
               </div>
 
               <div className="flex flex-col overflow-y-scroll">
-                {error && error.status === 401 ? (
-                  <div className="text-zinc-500 h-dvh w-full flex flex-row justify-center items-center text-sm gap-2">
-                    <InfoIcon/>
-                    <div>Login to save and revisit previous chats!</div>
-                  </div>
-                ) : null}
-
                 {!isLoading && history?.length === 0 && !error ? (
                   <div className="text-zinc-500 h-dvh w-full flex flex-row justify-center items-center text-sm gap-2">
                     <InfoIcon/>
