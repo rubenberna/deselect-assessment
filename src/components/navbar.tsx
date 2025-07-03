@@ -8,7 +8,7 @@ export const Navbar = async () => {
       <div className="flex flex-row gap-3 items-center">
         <History/>
         <div className="text-sm dark:text-zinc-300">
-          Deselect Knowledge Base
+          DESelect PDF chat
         </div>
       </div>
     </div>
