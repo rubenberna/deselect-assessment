@@ -190,7 +190,7 @@ export const InfoIcon = ({size = 16}: { size?: number }) => {
   );
 };
 
-export const PdfIcon = ({size = 16}: { size?: number }) => (
+export const PdfIcon = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width={24}
