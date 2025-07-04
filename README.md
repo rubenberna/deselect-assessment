@@ -1,36 +1,66 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Project Documentation
 
-## Getting Started
+## Technology Stack
 
-First, run the development server:
+This project leverages the following technologies:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- **TypeScript**: For type-safe development.
+- **Next**: Frontend framework for building the user interface.
+- **Node.js**: Backend runtime environment.
+- **ChromaDB**: Vector database for storing and querying embeddings.
+- **Supabase**: Relational db for storing messages history.
+- **@ai-sdk**: A TypeScript SDK for building AI-powered applications.
+
+---
+
+## Setup Instructions
+
+1. **Clone the Repository**:
+   ```bash
+   git clone <repository-url>
+   cd <repository-folder>
+    ```
+
+2. **Install Dependencies: Ensure you have pnpm or yarn installed. Run**:
+
+```
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+3. **Set Up Environment Variables: Create a .env file in the root directory and configure the following variables**:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+OPENAI_API_KEY=
+NEXT_PUBLIC_SUPABASE_URL=
+NEXT_PUBLIC_SUPABASE_ANON_KEY=
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Running Instructions
 
-## Learn More
+1. **Start ChromaDB: Ensure ChromaDB is running locally on Docker**:
 
-To learn more about Next.js, take a look at the following resources:
+```
+docker run -v ./chroma-data:/data -p 8000:8000 chromadb/chroma
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+2. **Start the Development Server**:
+   ```bash
+   npm run dev
+   ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Chunking Instructions
 
-## Deploy on Vercel
+The text chunking strategy involves splitting the PDF content into pages. Each page is converted into a Buffer and fed
+into *gpt-4o* to extract its text.
+The extracted text is then chunked into smaller segments (500 tokens with overlap 100) and uses a
+custom embedding strategy (*embedMany*) for a finer control over batching/chunking and ability to embed more control.
+This process ensures that each segment retains enough context for accurate querying.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+The embeddings are stored in ChromaDB for efficient querying.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+This strategy was chosen for several reasons:
+
+- Efficient embedding generation.
+- Improved query accuracy by preserving contextual information.
+- Scalability for large documents.
+- The chunking size was chosen to balance embedding quality and database performance.

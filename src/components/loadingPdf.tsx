@@ -8,10 +8,8 @@ import {fetcher} from "@/src/lib/utils/functions";
 
 const intervalDurationMs = 6000; // Default interval duration
 export const LoadingPDF = () => {
-  // const [messages, setMessages] = useState<string[]>([]);
   const [currentMessageIndex, setCurrentMessageIndex] = useState(0);
   const {data: messages, isLoading} = useSWR('/api/loadingMessages', fetcher)
-
 
   useEffect(() => {
     if (messages?.length > 0) {
