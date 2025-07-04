@@ -3,7 +3,7 @@ import {PDFDocument} from "pdf-lib";
 import {readFile} from "node:fs/promises";
 import path from "path";
 import pLimit from 'p-limit';
-import {generateContentFromPdfPage} from "@/src/lib/ai/content";
+import {generateContentFromPdfPage} from "@/src/lib/ai/pdfContent";
 
 export const processFullPdfDocument = async (filePath: string): Promise<Document[]> => {
 
