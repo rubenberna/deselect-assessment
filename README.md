@@ -8,7 +8,7 @@ This project leverages the following technologies:
 - **Next**: Frontend framework for building the user interface.
 - **Node.js**: Backend runtime environment.
 - **ChromaDB**: Vector database for storing and querying embeddings.
-- **Supabase**: Relational db for storing messages history.
+- **Supabase**: Cloud-based relational db for storing messages history.
 - **@ai-sdk**: A TypeScript SDK for building AI-powered applications.
 
 ---
@@ -52,7 +52,7 @@ docker run -v ./chroma-data:/data -p 8000:8000 chromadb/chroma
 
 The text chunking strategy involves splitting the PDF content into pages. Each page is converted into a Buffer and fed
 into *gpt-4o* to extract its text.
-The extracted text is then chunked into smaller segments (500 tokens with overlap 100) and uses a
+The extracted text is then chunked into smaller segments (1000 tokens with overlap of 200) and uses a
 custom embedding strategy (*embedMany*) for a finer control over batching/chunking and ability to embed more control.
 This process ensures that each segment retains enough context for accurate querying.
 

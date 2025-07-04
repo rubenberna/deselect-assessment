@@ -15,30 +15,28 @@ export const generateFunnyLoadingMessages = async (): Promise<string[]> => {
 
   const userPrompt = `Generate ${count} different funny loading messages.`;
 
-  try {
-    const {text} = await generateText({
-      model: openai('gpt-3.5-turbo'),
-      system: systemPrompt,
-      messages: [{role: 'user', content: userPrompt}],
-      temperature: 0.8, // A bit higher temperature for creativity
-      maxTokens: 300, // Sufficient for a few short messages
-    });
+  const {text} = await generateText({
+    model: openai('gpt-3.5-turbo'),
+    system: systemPrompt,
+    messages: [{role: 'user', content: userPrompt}],
+    temperature: 0.8, // A bit higher temperature for creativity
+    maxTokens: 300, // Sufficient for a few short messages
+  });
 
-    try {
-      const parsed = JSON.parse(text);
-      if (Array.isArray(parsed) && parsed.every(item => typeof item === 'string')) {
-        return parsed;
-      }
-      console.warn("AI response was not a valid JSON array of strings:", text);
-      return getDefaultMessages(); // Fallback
-    } catch (parseError) {
-      console.error("Failed to parse AI-generated JSON:", parseError);
+  try {
+    const parsed = JSON.parse(text);
+    if (!parsed) {
+      console.warn("AI response was empty or null:", text);
       return getDefaultMessages(); // Fallback
     }
-
-  } catch (error) {
-    console.error("Error generating funny loading messages:", error);
-    return getDefaultMessages();
+    if (Array.isArray(parsed)) {
+      return parsed?.filter(item => typeof item === 'string')
+    }
+    console.warn("AI response was not a valid JSON array of strings:", text);
+    return getDefaultMessages(); // Fallback
+  } catch (parseError) {
+    console.error("Failed to parse AI-generated JSON:", parseError);
+    return getDefaultMessages(); // Fallback
   }
 };
 

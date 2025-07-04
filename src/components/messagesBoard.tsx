@@ -5,7 +5,7 @@ import {Message as PreviewMessage} from "@/src/components/message";
 interface IProps {
   messagesContainerRef: RefObject<HTMLDivElement | null>
   messagesEndRef: RefObject<HTMLDivElement | null>
-  messages: Message[]
+  messages: Message[],
 }
 
 export const MessagesBoard = memo((props: IProps) => {

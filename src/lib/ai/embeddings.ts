@@ -13,8 +13,8 @@ export const generateChunks = async (
   docs: Document[],
 ): Promise<Document[]> => {
   const textSplitter = new RecursiveCharacterTextSplitter({
-    chunkSize: 500,
-    chunkOverlap: 100,
+    chunkSize: 1000,
+    chunkOverlap: 200,
   });
 
   return await textSplitter.splitDocuments(docs);
