@@ -4,9 +4,9 @@ import {ChangeEvent, useCallback} from "react";
 import {useChat} from "@ai-sdk/react";
 import useSWR from "swr";
 import {Message} from "ai";
-import {useScrollToBottom} from "@/src/components/use-scroll-to-bottom";
+import {useScrollToBottom} from "@/src/hooks/use-scroll-to-bottom";
 import {fetcher} from "@/src/lib/utils/functions";
-import {LoadingPdf} from "@/src/components/loadingPdf";
+import {LoadingPDF} from "@/src/components/loadingPdf";
 import {SuggestedMessages} from "@/src/components/suggestedMessages";
 import {NewMessageForm} from "@/src/components/newMessageForm";
 import {MessagesBoard} from "@/src/components/messagesBoard";
@@ -30,6 +30,9 @@ export default function Chat(props: ChatProps) {
     setInput(e.target.value);
   }, []);
 
+  if (isLoading) {
+    return <LoadingPDF/>
+  }
   return (
     <div className="flex flex-row justify-center pb-20 h-dvh bg-white dark:bg-zinc-900">
       <div className="flex flex-col justify-between items-center gap-4">
@@ -38,19 +41,13 @@ export default function Chat(props: ChatProps) {
           messagesEndRef={messagesEndRef}
           messages={messages}
         />
-
-        {isLoading ?
-          <LoadingPdf/> :
-          <>
-            {!messages?.length && (
-              <SuggestedMessages append={append}/>
-            )}
-            <NewMessageForm
-              input={input}
-              changeInput={changeInput}
-              handleSubmit={handleSubmit}/>
-          </>
-        }
+        {!messages?.length && (
+          <SuggestedMessages append={append}/>
+        )}
+        <NewMessageForm
+          input={input}
+          changeInput={changeInput}
+          handleSubmit={handleSubmit}/>
       </div>
     </div>
   )

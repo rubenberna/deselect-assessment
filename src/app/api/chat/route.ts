@@ -13,6 +13,8 @@ export async function POST(req: Request) {
 
   const contextText = await queryPDF(lastUserMessage || '');
 
+  console.log('context: ', contextText)
+
   const result = streamText({
     model: openai('gpt-4o-mini'),
     system: `
