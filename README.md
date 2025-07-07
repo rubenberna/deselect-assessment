@@ -24,7 +24,7 @@ This project leverages the following technologies:
 2. **Install Dependencies: Ensure you have pnpm or yarn installed. Run**:
 
 ```
-npm install
+<package-manager> install
 ```
 
 3. **Set Up Environment Variables: Create a .env file in the root directory and configure the following variables**:
