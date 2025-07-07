@@ -2,14 +2,13 @@
 
 import {ChangeEvent, useCallback} from "react";
 import {useChat} from "@ai-sdk/react";
-import useSWR from "swr";
 import {Message} from "ai";
-import {useScrollToBottom} from "@/src/hooks/use-scroll-to-bottom";
-import {fetcher} from "@/src/lib/utils/functions";
+import {useScrollToBottom} from "@/src/hooks/useScrollToBottom";
 import {LoadingPDF} from "@/src/components/loadingPdf";
 import {SuggestedMessages} from "@/src/components/suggestedMessages";
 import {NewMessageForm} from "@/src/components/newMessageForm";
 import {MessagesBoard} from "@/src/components/messagesBoard";
+import {_useOnMount} from "@/src/hooks/_useOnMount";
 
 interface ChatProps {
   initialMessages: Array<Message>;
@@ -21,7 +20,7 @@ export default function Chat(props: ChatProps) {
   const {messages, input, setInput, handleSubmit, append} = useChat({
     initialMessages,
   })
-  const {isLoading} = useSWR('/api/loadPdf', fetcher)
+  const {isLoadingPdf} = _useOnMount()
 
   const [messagesContainerRef, messagesEndRef] =
     useScrollToBottom<HTMLDivElement>();
@@ -30,7 +29,7 @@ export default function Chat(props: ChatProps) {
     setInput(e.target.value);
   }, []);
 
-  if (isLoading) {
+  if (isLoadingPdf) {
     return <LoadingPDF/>
   }
   return (

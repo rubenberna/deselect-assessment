@@ -1,7 +1,7 @@
 import {generateText} from 'ai';
 import {openai} from '@ai-sdk/openai';
 
-const count = 10; // Number of messages to generate
+const count = 10;
 export const generateFunnyLoadingMessages = async (): Promise<string[]> => {
   const systemPrompt = `
     You are a creative assistant that generates short, funny, quirky, and lighthearted loading messages.
@@ -27,16 +27,16 @@ export const generateFunnyLoadingMessages = async (): Promise<string[]> => {
     const parsed = JSON.parse(text);
     if (!parsed) {
       console.warn("AI response was empty or null:", text);
-      return getDefaultMessages(); // Fallback
+      return getDefaultMessages();
     }
     if (Array.isArray(parsed)) {
       return parsed?.filter(item => typeof item === 'string')
     }
     console.warn("AI response was not a valid JSON array of strings:", text);
-    return getDefaultMessages(); // Fallback
+    return getDefaultMessages();
   } catch (parseError) {
     console.error("Failed to parse AI-generated JSON:", parseError);
-    return getDefaultMessages(); // Fallback
+    return getDefaultMessages();
   }
 };
 

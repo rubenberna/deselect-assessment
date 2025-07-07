@@ -14,15 +14,16 @@ export const History = () => {
   const {id} = useParams();
   const pathname = usePathname();
   const [isHistoryVisible, setIsHistoryVisible] = useState(false);
+
   const {
     data: history,
     error,
     isLoading,
     mutate,
-  } = useSWR<Array<IChat>>("/api/history", fetcher, {
+  } = useSWR<Array<IChat>>(isHistoryVisible ? "/api/history" : null, fetcher, {
     fallbackData: [],
   });
-  
+
   useEffect(() => {
     mutate();
   }, [pathname, mutate]);

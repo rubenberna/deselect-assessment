@@ -1,12 +1,12 @@
 'use client';
 
 import {useEffect, useState} from "react";
-import {PdfIcon} from "@/src/components/icons";
 import useSWR from "swr";
+import {PdfIcon} from "@/src/components/icons";
 import {fetcher} from "@/src/lib/utils/functions";
 
 
-const intervalDurationMs = 6000; // Default interval duration
+const intervalDurationMs = 6000;
 export const LoadingPDF = () => {
   const [currentMessageIndex, setCurrentMessageIndex] = useState(0);
   const {data: messages, isLoading} = useSWR('/api/loadingMessages', fetcher)
@@ -26,8 +26,8 @@ export const LoadingPDF = () => {
 
 
   const displayedMessage = isLoading
-    ? "Loading up the fun..." // Initial message while AI generates
-    : messages[currentMessageIndex] || "Still loading, hang in there!"; // Fallback
+    ? "Loading up the fun..."
+    : messages[currentMessageIndex] || "Still loading, hang in there!";
 
   return (
     <div className="animate-pulse flex items-center justify-center h-screen bg-white dark:bg-zinc-900">
